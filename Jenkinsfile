@@ -12,6 +12,12 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('create eks from terraform'){
+        steps{
+            sh 'terraform init'
+            sh 'terraform apply'
+          }
+        }
           stage('Docker Build and Push') {
       steps {
       	withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
